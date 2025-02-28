@@ -9,3 +9,4 @@ st.markdown("This is a Streamlit app that demonstrates the probability density f
             "Use the sidebar to select between continuous and discrete distributions, and set the parameters of the selected distribution.")
 
 st.markdown("---")
+st.divider()
