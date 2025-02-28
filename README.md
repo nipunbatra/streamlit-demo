@@ -25,8 +25,8 @@ streamlit run Home.py
 # Steps I took to deploy this app on Hugging Face and manage via Github
 
 1. Create a new Hugging Face Space. Mine is called `probability-distributions`
-2. Added Hugging Face as a remote to my local git repository using `git remote add space https://huggingface.co/spaces/Nipun/probability-distributions`
-3. Pushed the code to the Hugging Face Space using `git push space main`
+2. Added Hugging Face as a remote to my local git repository using `git remote set-url space git@hf.co:spaces/Nipun/probability-distributions`
+3. Pushed the code to the Hugging Face Space using `git push --force space main`
 4. Now, whenever I make changes to the code, I can push the changes to the Hugging Face Space using `git push space main` in addition to pushing the changes to Github.
 5. To avoid multiple pushes, I created a githook that pushes the changes to the Hugging Face Space whenever I push the changes to Github. The githook is located at `.git/hooks/post-push` and contains the following code:
 ```bash
