@@ -2,7 +2,7 @@ import streamlit as st
 import torch
 import plotly.graph_objects as go
 from config.config_continuous import CONTINUOUS_DISTRIBUTIONS
-from utils import compute_pdf
+from utils import compute_pdf, plot_pdf
 
 st.title("Continuous Distributions")
 
@@ -14,7 +14,5 @@ support = support(params) if callable(support) else None
 
 x_range = torch.linspace(-10, 10, 1000)
 pdf = compute_pdf(dist, x_range, support)
+plot_pdf(pdf, x_range, selected_dist)
 
-fig = go.Figure()
-fig.add_trace(go.Scatter(x=x_range.numpy(), y=pdf.numpy(), mode="lines", name=selected_dist))
-st.plotly_chart(fig)

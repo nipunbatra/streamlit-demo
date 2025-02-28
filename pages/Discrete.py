@@ -2,6 +2,7 @@ import streamlit as st
 import torch
 import plotly.graph_objects as go
 from config.config_discrete import DISCRETE_DISTRIBUTIONS
+from utils import compute_pdf, plot_pmf
 
 st.title("Discrete Distributions")
 
@@ -18,7 +19,4 @@ else:
     x_range = torch.arange(0, 20)
 
 pmf = dist.log_prob(x_range).exp()
-
-fig = go.Figure()
-fig.add_trace(go.Bar(x=x_range.numpy(), y=pmf.numpy(), name=selected_dist))
-st.plotly_chart(fig)
+plot_pmf(pmf, x_range, selected_dist)
