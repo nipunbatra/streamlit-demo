@@ -10,3 +10,4 @@ st.markdown("This is a Streamlit app that demonstrates the probability density f
 
 st.markdown("---")
 st.markdown("Github repo: ")
+st.markdown("made ")
