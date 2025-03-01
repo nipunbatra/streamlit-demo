@@ -30,7 +30,8 @@ def plot_pmf(pmf, x_range, dist_name):
     # Main plot area
     st.markdown(f'#### Probability Mass Function for {dist_name} Distribution')
     fig = go.Figure()
-    fig.add_trace(go.Bar(x=x_range.tolist(), y=pmf.tolist()))
+    fig.add_trace(go.Bar(x=x_range.tolist(), y=pmf.tolist(),
+                         name='', hovertemplate='x: %{x:.2f}<br>p(x): %{y:.2f}'))
     fig.update_layout(xaxis_title='x', yaxis_title='P(x)', showlegend=False)
 
     st.plotly_chart(fig)
