@@ -1,17 +1,8 @@
 import streamlit as st
 import torch
 import plotly.graph_objects as go
-from config.continuous.uniform import UNIFORM
-from config.continuous.normal import NORMAL
-from config.continuous.lognormal import LOGNORMAL
+from config.continuous import CONTINUOUS_DISTRIBUTIONS
 from utils import compute_pdf, plot_pdf
-
-# Combine the distributions into a dictionary
-CONTINUOUS_DISTRIBUTIONS = {
-    "Uniform": UNIFORM,
-    "Normal": NORMAL,
-    "LogNormal": LOGNORMAL,
-}
 
 st.title("Continuous Distributions")
 

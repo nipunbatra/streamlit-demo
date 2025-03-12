@@ -1,15 +1,8 @@
 import streamlit as st
 import torch
 import plotly.graph_objects as go
-from config.discrete.binomial import BINOMIAL
-from config.discrete.poisson import POISSON
+from config.discrete import DISCRETE_DISTRIBUTIONS
 from utils import compute_pdf, plot_pmf
-
-# Combine the distributions into a dictionary
-DISCRETE_DISTRIBUTIONS = {
-    "Binomial": BINOMIAL,
-    "Poisson": POISSON,
-}
 
 st.title("Discrete Distributions")
 
