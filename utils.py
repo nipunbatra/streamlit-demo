@@ -16,6 +16,12 @@ def compute_pdf(dist, x_range, support):
     pdf[mask] = dist.log_prob(x_range[mask]).exp()
     return pdf
 
+def compute_cdf(dist, x_range, support):
+    cdf = torch.zeros_like(x_range, dtype=torch.float)    
+    pdf = compute_pdf(dist, x_range, support)
+    cdf = pdf.cumsum(dim=0)
+    return cdf
+
 def plot_pdf(pdf, x_range, dist_name):
     # Main plot area
     st.markdown(f'#### Probability Density Function for {dist_name} Distribution')
@@ -33,5 +39,25 @@ def plot_pmf(pmf, x_range, dist_name):
     fig.add_trace(go.Bar(x=x_range.tolist(), y=pmf.tolist(),
                          name='', hovertemplate='x: %{x:.2f}<br>p(x): %{y:.2f}'))
     fig.update_layout(xaxis_title='x', yaxis_title='P(x)', showlegend=False)
+
+    st.plotly_chart(fig)
+
+def plot_cdf(cdf, x_range, dist_name):
+    # Main plot area
+    st.markdown(f'#### Cumulative Distribution Function for {dist_name} Distribution')
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=x_range, y=cdf, mode='lines',
+                            name='', hovertemplate='x: %{x:.2f}<br>F(x): %{y:.2f}'))
+    fig.update_layout(xaxis_title='x', yaxis_title='F(x)', showlegend=False)
+
+    st.plotly_chart(fig)
+
+def plot_discrete_cdf(cdf, x_range, dist_name):
+    # Main plot area
+    st.markdown(f'#### Cumulative Distribution Function for {dist_name} Distribution')
+    fig = go.Figure()
+    fig.add_trace(go.Bar(x=x_range.tolist(), y=cdf.tolist(),
+                         name='', hovertemplate='x: %{x:.2f}<br>F(x): %{y:.2f}'))
+    fig.update_layout(xaxis_title='x', yaxis_title='F(x)', showlegend=False)
 
     st.plotly_chart(fig)
