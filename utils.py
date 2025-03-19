@@ -1,6 +1,8 @@
+import scipy.integrate
 import torch
 import streamlit as st
 import plotly.graph_objects as go
+import scipy
 
 def compute_pdf(dist, x_range, support):
     pdf = torch.zeros_like(x_range, dtype=torch.float)
@@ -17,11 +19,29 @@ def compute_pdf(dist, x_range, support):
     return pdf
 
 def compute_cdf(dist, x_range, support):
-    pdf = compute_pdf(dist, x_range, support)
-    step_size = (x_range[1] - x_range[0]) if len(x_range) > 1 else 1
-    cdf = (pdf * step_size).cumsum(dim=0)
+    cdf = torch.zeros_like(x_range, dtype=torch.float)
+
+    if support:
+        min_val, max_val = support
+        mask = (x_range >= min_val) if min_val is not None else torch.ones_like(x_range, dtype=torch.bool)
+        if max_val is not None:
+            mask &= (x_range <= max_val)
+            cdf[x_range < min_val] = 0.0
+            cdf[x_range > max_val] = 1.0
+    else:
+        mask = torch.ones_like(x_range, dtype=torch.bool)
+
+    try:
+        cdf[mask] = dist.cdf(x_range[mask])
+    except NotImplementedError:
+        cdf[mask] = torch.tensor([scipy.integrate.quad(lambda t: dist.log_prob(torch.tensor(t)).exp().item(), support[0], x)[0] for x in x_range[mask]], dtype=torch.float)
+
     return cdf
 
+def compute_descrete_cdf(pmf, x_range, support):
+    cdf = torch.zeros_like(x_range, dtype=torch.float)
+    cdf = pmf.cumsum(dim=0)
+    return cdf
 
 def plot_pdf(pdf, x_range, dist_name):
     # Main plot area
