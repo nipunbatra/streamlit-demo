@@ -17,10 +17,11 @@ def compute_pdf(dist, x_range, support):
     return pdf
 
 def compute_cdf(dist, x_range, support):
-    cdf = torch.zeros_like(x_range, dtype=torch.float)    
     pdf = compute_pdf(dist, x_range, support)
-    cdf = pdf.cumsum(dim=0)
+    step_size = (x_range[1] - x_range[0]) if len(x_range) > 1 else 1
+    cdf = (pdf * step_size).cumsum(dim=0)
     return cdf
+
 
 def plot_pdf(pdf, x_range, dist_name):
     # Main plot area
