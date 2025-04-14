@@ -14,6 +14,6 @@ support = support(params) if callable(support) else None
 
 x_range = torch.linspace(-10, 10, 1000)
 pdf = compute_pdf(dist, x_range, support)
+
 plot_pdf(pdf, x_range, selected_dist)
 plot_cdf(compute_cdf(dist, x_range, support), x_range, selected_dist)
-
