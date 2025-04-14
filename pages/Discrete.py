@@ -2,7 +2,7 @@ import streamlit as st
 import torch
 import plotly.graph_objects as go
 from config.discrete import DISCRETE_DISTRIBUTIONS
-from utils import compute_pdf, plot_pmf
+from utils import compute_pdf, plot_pmf, compute_descrete_cdf, plot_discrete_cdf
 
 st.title("Discrete Distributions")
 
@@ -20,3 +20,4 @@ else:
 
 pmf = dist.log_prob(x_range).exp()
 plot_pmf(pmf, x_range, selected_dist)
+plot_discrete_cdf(compute_descrete_cdf(pmf, x_range, support), x_range, selected_dist)
